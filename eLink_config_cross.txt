@@ -1,0 +1,49 @@
+#[data]
+TYPE_MS2=mgf
+PATH_MS2=E:\astral_mgf\hela7min-1_110000_120000.mgf #E:\astral_mgf\hela7min-1_10000_20000.mgf|E:\astral_mgf\hela7min-1_20000_30000.mgf|E:\astral_mgf\hela7min-1_30000_40000.mgf|E:\astral_mgf\hela7min-1_40000_50000.mgf|E:\astral_mgf\hela7min-1_50000_60000.mgf|E:\astral_mgf\hela7min-1_60000_70000.mgf|E:\astral_mgf\hela7min-1_70000_80000.mgf|E:\astral_mgf\hela7min-1_80000_90000.mgf|E:\astral_mgf\hela7min-1_90000_100000.mgf|E:\astral_mgf\hela7min-1_100000_110000.mgf|E:\astral_mgf\hela7min-1_110000_120000.mgf|E:\astral_mgf\hela7min-1_120000_130000.mgf|E:\astral_mgf\hela7min-1_130000_140000.mgf|E:\astral_mgf\hela7min-1_140000_150000.mgf|E:\astral_mgf\hela7min-1_150000_160000.mgf|E:\astral_mgf\hela7min-1_160000_170000.mgf|E:\astral_mgf\hela7min-1_170000_180000.mgf|E:\astral_mgf\hela7min-1_180000_190000.mgf|E:\astral_mgf\hela7min-1_190000_200000.mgf|E:\astral_mgf\hela7min-1_200000_210000.mgf|E:\astral_mgf\hela7min-1_210000_220000.mgf
+PATH_FASTA=F:\230116LX-tims\HUMAN_swissprot_20386 sequence+iRT_20211107.fasta
+PATH_FASTA_EXPORT=F:\astral\pkl\ #VIP
+PATH_RESULT_EXPORT=F:\astral\result\ #VIP
+
+#[biology]
+NAME_ENZYME=trypsin KR C #use ';' to set multiply enzymes
+TYPE_DIGEST=0 #0 for specific; 1 for semi-specific; 2 for non-specific
+NUMBER_MAX_MISS_CLV=3
+NAME_MOD_FIX=Carbamidomethyl[C] #VIP, use ';' to set multiply fixed modifications
+NAME_MOD_VAR=Oxidation[M] #VIP, use ';' to set multiply variable modifications
+NUMBER_MAX_MOD=3 #Maximum of variable modification in one peptide sequence (not consider the fixed modifications)
+LINKER_1_NAME=TG
+LINKER_2_NAME=TG
+MAX_PEPNUM=90000000
+
+#[mass spectrometry]
+PPM_TOL_PRECURSOR=20ppm
+PPM_TOL_FRAGMENT=20ppm
+TYPE_ACTIVATION=HCD
+
+#[performance]
+NUMBER_THREAD=8
+TYPE_THREAD=0 #0 is for multi-process (high speed but use more memory); 1 is for multi-thread (low speed but use less memory)
+NUMBER_SELECT_PEAK=3000
+NUMBER_SPECTRUM=100000
+LEN_MAX_PROTEIN=100000
+MASS_PEP_LOW=400
+MASS_PEP_UP=2000
+LEN_PEP_LOW=6
+LEN_PEP_UP=30
+INDEX_SPLIT_MASS=100 #create one pkl file for each 100Da ([0, 100], [100, 200], ..., [9900, 10000])
+NUMBER_TOP_RESULT=10 #output top-10 peptides for each spectrum
+
+MULTI_MASS=100 #use mass hash (mass*MUTLI_MASS) to retrive peptide, spectrum or peak, this value of creating peptide index and searching mgf must be same.
+TYPE_FLOW=1 #0 is create peptide index for (fasta), search mgf files, rerank results and computing fdr; 1 is only create peptide index; 2 is only search mgf files, rerank results and computing fdr; 3 is rerank results and computing fdr; 4 is only computing fdr
+TYPE_PEPTIDE=2
+TYPE_LINK=1
+
+#[filter]
+FDR_PSM=0.05
+
+#[ini]
+PATH_INI_ELEMENT=F:\code-python\ComplexCross\ini\element.ini
+PATH_INI_AA=F:\code-python\ComplexCross\ini\aa.ini
+PATH_INI_MOD=F:\code-python\ComplexCross\ini\modification.ini
+PATH_INI_XLINK=F:\code-python\ComplexCross\ini\xlink.ini

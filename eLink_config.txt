@@ -1,0 +1,51 @@
+#[data]
+TYPE_MS2=mgf
+PATH_MS2= #VIP
+PATH_FASTA= #VIP
+PATH_FASTA_EXPORT=./protein_index/ #VIP
+PATH_RESULT_EXPORT=./result/ #VIP
+
+#[biology]
+NAME_ENZYME=trypsin KR C #use ';' to set multiply enzymes
+TYPE_DIGEST=0 #0 for specific; 1 for semi-specific; 2 for non-specific
+NUMBER_MAX_MISS_CLV=3
+NAME_MOD_FIX=Carbamidomethyl[C] #VIP, use ';' to set multiply fixed modifications
+NAME_MOD_VAR=Oxidation[M] #VIP, use ';' to set multiply variable modifications
+NUMBER_MAX_MOD=3 #Maximum of variable modification in one peptide sequence (not consider the fixed modifications)
+LINKER_1_NAME=BS3
+LINKER_2_NAME=B3
+MAX_PEPNUM=9000000
+
+#[mass spectrometry]
+PPM_TOL_PRECURSOR=20ppm
+PPM_TOL_FRAGMENT=20ppm
+TYPE_ACTIVATION=HCD
+
+#[performance]
+NUMBER_THREAD=8
+TYPE_THREAD=0 #0 is for multi-process (high speed but use more memory); 1 is for multi-thread (low speed but use less memory)
+NUMBER_SELECT_PEAK=200
+NUMBER_SPECTRUM=200000
+LEN_MAX_PROTEIN=100000
+MASS_PEP_LOW=500
+MASS_PEP_UP=6000
+LEN_PEP_LOW=5
+LEN_PEP_UP=60
+INDEX_SPLIT_MASS=100 #create one pkl file for each 100Da ([0, 100], [100, 200], ..., [9900, 10000])
+NUMBER_TOP_RESULT=10 #output top-10 peptides for each spectrum
+
+MULTI_MASS=100 #use mass hash (mass*MUTLI_MASS) to retrive peptide, spectrum or peak, this value of creating peptide index and searching mgf must be same.
+TYPE_FLOW=1
+TYPE_PEPTIDE=1
+TYPE_LINK=1
+
+#[filter]
+FDR_PSM=0.05
+FDR_SEPARATE=1
+MOBILITY_RERANK=1
+
+#[ini]
+PATH_INI_ELEMENT=./ini/element.ini
+PATH_INI_AA=./ini/aa.ini
+PATH_INI_MOD=./ini/modification.ini
+PATH_INI_XLINK=./ini/xlink.ini

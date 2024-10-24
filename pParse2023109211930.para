@@ -1,0 +1,32 @@
+# pParse.para params template
+# For help: mail to pparse@ict.ac.cn 
+# Time: 2014.12.08
+
+[Basic Options]
+datapath = E:\Data\
+
+[Advanced Options]
+co-elute = 1
+# 0, output single precursor for single scan;
+# 1, output all co-eluted precursors.
+input_format = raw
+# raw / ms1
+isolation_width = 2
+# 2 / 2.5 / 3 / 4
+mars_threshold = -0.5
+ipv_file = .\IPV.txt
+trainingset = EmptyPath
+
+[Internal Switches]
+output_mars_y = 0
+delete_msn = 0
+output_mgf = 1
+output_pf = 1
+debug_mode = 0
+check_activationcenter = 1
+output_all_mars_y = 0
+rewrite_files = 0
+export_unchecked_mono = 0
+cut_similiar_mono = 1
+mars_model = 4
+output_trainingdata = 0
