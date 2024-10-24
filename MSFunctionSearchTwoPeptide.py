@@ -425,6 +425,34 @@ class CFunctionTwoPeptideSearchFine:
             pass
             # self.search_cross_loop(list_fine_data, coarse_res, list_useful_result, s2pep_res)
 
+    def multi_process_search(self, list_fine_data, coarse_res, list_useful_result, s2pep_res):
+        split = self.__split_fine_search_data(list_fine_data, coarse_res, list_useful_result)
+        with multiprocessing.pool.ThreadPool(processes=16) as pool:
+            pool.map(self.multi_search_only_cross, split)
+            pool.join()
+
+        for one_piece in split:
+            s2pep_res += one_piece[3]
+
+    def __split_fine_search_data(self, list_fine_data, coarse_res, list_useful_result):
+        split = []
+
+        chunk_size = len(list_fine_data) // self.dp.myCFG.thread_num
+        # 把数据分成 thread_num 份
+        for i in range(self.dp.myCFG.thread_num):
+            split.append([list_fine_data[i * chunk_size: (i + 1) * chunk_size],
+                          coarse_res[i * chunk_size: (i + 1) * chunk_size],
+                          list_useful_result,
+                          []])
+        return split
+
+    def multi_search_only_cross(self, input_data):
+        list_fine_data = input_data[0]
+        coarse_res = input_data[1]
+        list_useful_result = input_data[2]
+        s2pep_res = input_data[3]
+        self.search_only_cross(list_fine_data, coarse_res, list_useful_result, s2pep_res)
+
     def search_only_cross(self, list_fine_data, coarse_res, list_useful_result, s2pep_res):
 
         self.cross_mass = self.dp.myLINK.linker_1_data.cross_mass
@@ -435,7 +463,7 @@ class CFunctionTwoPeptideSearchFine:
 
         timer = Timer("Fine Search")
         for res_index, one_spectrum in enumerate(list_fine_data):
-            if res_index % 5000 == 0:
+            if res_index % 500 == 0:
                 print(
                     "[Info] Finished cross-link fine search : %.2f%%" % ((res_index + 1) / (len(list_fine_data)) * 100))
                 timer.print()
@@ -517,8 +545,8 @@ class CFunctionTwoPeptideSearchFine:
             #                                          all_fine_score, timer, alpha_pep_sq, beta_pep_sq)
         with multiprocessing.Pool(processes=16) as pool:
             res = pool.starmap(self.soldier_one_only_cross_fine_score, args)
-        # self.pool.join()
-        # pool.join()
+            # self.pool.join()
+            # pool.join()
             all_fine_score += res
 
     def __soldier_create_aa_list(self, sq, mod_site_list):
