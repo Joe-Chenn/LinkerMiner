@@ -414,8 +414,12 @@ class CFunctionTwoPeptideSearchFine:
     def search(self, list_fine_data, coarse_res, list_useful_result, s2pep_res):
 
         if self.link_type == 1:
-
-            self.search_only_cross(list_fine_data, coarse_res, list_useful_result, s2pep_res)
+            multiprocess_flag = self.dp.myCFG.D2_TYPE_THREAD
+            multiprocess_flag = 1
+            if multiprocess_flag == 1:
+                self.multi_process_search(list_fine_data, coarse_res, list_useful_result, s2pep_res)
+            else:
+                self.search_only_cross(list_fine_data, coarse_res, list_useful_result, s2pep_res)
 
         elif self.link_type == 2:
 
@@ -437,7 +441,7 @@ class CFunctionTwoPeptideSearchFine:
     def __split_fine_search_data(self, list_fine_data, coarse_res, list_useful_result):
         split = []
 
-        chunk_size = len(list_fine_data) // self.dp.myCFG.thread_num
+        chunk_size = len(list_fine_data) // 16  # self.dp.myCFG.thread_num
         # 把数据分成 thread_num 份
         for i in range(self.dp.myCFG.thread_num):
             split.append([list_fine_data[i * chunk_size: (i + 1) * chunk_size],
